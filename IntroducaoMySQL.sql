@@ -226,6 +226,112 @@ values
 # ------------------------------------------------------ #
 # PRIMARY KEYS
 
+alter table employees
+add constraint
+PRIMARY KEY(employee_id);
+
+insert into employees (employee_id, first_name, last_name, hourly_pay, hire_date)
+values
+    (11, 'Barnacle', 'Boy', 2.00, '2021-11-03');
+
+# Duplicate entry '11' for key 'employees.PRIMARY'
+# Column 'employee_id' cannot be null
+
+# ------------------------------------------------------ #
+# AUTO_INCREMENT
+
+ALTER TABLE employees
+MODIFY employee_id INT AUTO_INCREMENT;
+
+delete from employees
+where employee_id = 14;
+
+INSERT INTO employees (employee_id, first_name, last_name, hourly_pay, hire_date)
+VALUES
+(11, 'Barnacle', 'Boy', 24.00, '2021-02-10'),
+(12, 'Larry', 'Lobster', 26.75, '2020-04-15'),
+(13, 'Bubble', 'Bass', 20.50, '2021-12-05'),
+(14, 'Flying', 'Dutchman', 40.00, '2018-10-13');
+
+ALTER TABLE employees AUTO_INCREMENT = 11;
+
+select *
+from employees;
+
+insert into employees (first_name, last_name, hourly_pay, hire_date)
+values
+    ('Mrs.', 'Puff', 22.80, '2019-03-17');
+
+insert into employees (first_name, last_name, hourly_pay, hire_date)
+values
+    ('Fred', 'MyLeg', 18.25, '2020-06-18');
+
+# ------------------------------------------------------ #
+# FOREIGN KEY
+
+select *
+from customers;
+
+create table customers(
+    customers_id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50)
+);
+
+insert into customers (first_name, last_name)
+values ('Old', 'Man Jenkins'),
+       ('Doodle', 'Bob'),
+       ('Patchy', 'Pirate'),
+       ('Potty', 'Parrot'),
+       ('Man', 'Ray'),
+       ('Dirty', 'Bubble'),
+       ('Bubble', 'Buddy'),
+       ('Kevin', 'Cucumber'),
+       ('Nat', 'Peterson'),
+       ('Tom', 'Fish'),
+       ('Nancy', 'SuzyFish'),
+       ('Scooter', 'SurfFish');
+
+
+create table transactions(
+    transactions_id INT PRIMARY KEY auto_increment,
+    amount DECIMAL(5, 2),
+    customer_id INT,
+    foreign key(customer_id) references customers(customers_id)
+);
+
+ALTER TABLE transactions AUTO_INCREMENT = 1000;
+
+insert into transactions (amount, customer_id)
+values
+    (4.99, 3),
+    (2.89, 2),
+    (3.38, 3),
+    (4.99, 1);
+
+select *
+from transactions;
+
+insert into transactions (amount, customer_id)
+values
+    (1.99, NULL);
+
+# ------------------------------------------------------ #
+# JOINS KEY
+
+
+select *
+from transactions inner join customers
+on transactions.customer_id = customers.customers_id;
+
+select *
+from transactions right join customers
+on transactions.customer_id = customers.customers_id;
+
+
+select *
+from transactions left join customers
+on transactions.customer_id = customers.customers_id;
 
 
 
