@@ -333,6 +333,115 @@ select *
 from transactions left join customers
 on transactions.customer_id = customers.customers_id;
 
+# ------------------------------------------------------ #
+# FUNCTIONS
+
+select
+    count(amount) as count,
+    max(amount) as maximum,
+    min(amount) as minimum,
+    avg(amount) as average,
+    sum(amount) as sum
+from transactions;
+
+select
+    concat(first_name, ' ', last_name) as full_name
+from employees;
+
+# ------------------------------------------------------ #
+# AND, OR, NOT
+
+alter table employees
+add column  job varchar(25) after hourly_pay;
+
+select *
+from employees;
+
+update employees
+set job = 'janitor'
+where employee_id = 6;
+
+select *
+from employees
+where hire_date < '2023-01-05' and job = 'cook';
+
+
+select *
+from employees
+where job = 'cook' or job = 'cashier';
+
+select *
+from employees
+where not job = 'manager';
+
+select *
+from employees
+where job in ('manager', 'cashier', 'janitor');
+
+# ------------------------------------------------------ #
+# WILD CARDS
+
+select *
+from employees
+where first_name like 's%';
+
+select *
+from employees
+where last_name like '%r';
+
+select *
+from employees
+where job like '_ook';
+
+select *
+from employees
+where hire_date like '____-06-__';
+
+select *
+from employees
+where job like '_a%';
+
+# ------------------------------------------------------ #
+# ORDER BY
+
+select *
+from employees
+order by last_name;
+
+select *
+from employees
+order by last_name desc;
+
+select *
+from transactions
+order by amount, customer_id;
+
+# ------------------------------------------------------ #
+# LIMIT
+
+select *
+from customers
+order by last_name
+limit 4;
+
+select *
+from customers
+limit 3, 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
