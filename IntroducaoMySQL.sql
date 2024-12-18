@@ -535,4 +535,35 @@ select
     email
 from customers;
 
+# ------------------------------------------------------ #
+# INDEXES
+
+show indexes from customers;
+
+create index last_name_idx
+on customers(last_name);
+
+select * from customers
+where last_name = 'Ray';
+
+select * from customers
+where first_name = 'Man';
+
+select *
+from customers;
+
+create index last_name_first_idx
+on customers(last_name, first_name);
+
+alter table customers
+drop index last_name_first_idx;
+
+show indexes from customers;
+
+
+
+
+
+
+
 
