@@ -729,11 +729,25 @@ on transactions.customer_id = customers.customers_id
 group by first_name
 having count(amount) >= 9;
 
+# ------------------------------------------------------ #
+# ROLLUP
 
+select *
+from transactions;
 
+SELECT
+    SUM(amount) AS total_amount,
+    YEAR(order_date) AS year
+FROM transactions
+GROUP BY YEAR(order_date) with rollup;
 
-
-
+select
+    first_name,
+    count(amount)
+from transactions
+    inner join customers
+on transactions.customer_id = customers.customers_id
+group by first_name with rollup;
 
 
 
