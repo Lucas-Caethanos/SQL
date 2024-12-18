@@ -428,6 +428,41 @@ select *
 from customers
 limit 3, 1;
 
+# ------------------------------------------------------ #
+# UNIONS - combines the results of two or more SELECT statements
+
+select
+    first_name,
+    last_name
+from employees
+union
+select
+    first_name,
+    last_name
+from customers;
+
+select
+    first_name,
+    last_name
+from employees
+union all
+select
+    first_name,
+    last_name
+from customers;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
