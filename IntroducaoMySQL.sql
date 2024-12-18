@@ -451,22 +451,44 @@ select
     last_name
 from customers;
 
+# ------------------------------------------------------ #
+# SELF JOINS
 
+alter table customers
+add referral_id int;
 
+select * from customers;
 
+update customers
+set referral_id = 2
+where customers_id = 4;
 
+select
+    a.customers_id,
+    a.first_name,
+    a.last_name,
+    concat(b.first_name, ' ', b.last_name)  as 'referred_by'
+from customers as a
+inner join customers as b
+on a.referral_id = b.customers_id;
 
+select * from employees;
 
+alter table employees
+add supervisor_id int;
 
+update employees
+set supervisor_id = 5
+where employee_id = 4;
 
-
-
-
-
-
-
-
-
+select
+    a.employee_id,
+    a.first_name,
+    a.last_name,
+    concat(b.first_name, ' ', b.last_name) as 'supervisor'
+from employees as a
+inner join employees as b
+on a.supervisor_id = b.employee_id;
 
 
 
