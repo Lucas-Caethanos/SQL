@@ -490,23 +490,49 @@ from employees as a
 inner join employees as b
 on a.supervisor_id = b.employee_id;
 
+# ------------------------------------------------------ #
+# VIEWS
 
+create view employee_attendance as
+select
+    first_name,
+    last_name
+from employees;
 
+select *
+from employee_attendance
+order by last_name;
 
+drop view employee_attendance;
 
+alter table customers
+add column email varchar(50);
 
+select *
+from customers;
 
+UPDATE customers
+SET email = 'old.man.jenkins@exemplo.com'
+WHERE customers_id = 1;
 
+alter table customers
+drop column email;
 
+update customers
+set email = lower(
+                concat_ws('.',
+                replace(first_name, ' ', '-'),
+                replace(last_name, ' ', '-'),
+                '@email.com')
+            )
+where email is null or email = '';
 
+select *
+from customers;
 
-
-
-
-
-
-
-
-
+create view customers_emails as
+select
+    email
+from customers;
 
 
