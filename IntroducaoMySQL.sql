@@ -749,6 +749,62 @@ from transactions
 on transactions.customer_id = customers.customers_id
 group by first_name with rollup;
 
+# ------------------------------------------------------ #
+# ON DELETE
+
+-- ON DELETE SET NULL = When a FK is deleted, replace FK with NULL
+-- ON DELETE CASCADE  = When a FK is deleted, replace FK with NULL
+
+select *
+from transactions;
+
+alter table transactions
+drop foreign key fk_customers_id;
+
+alter table transactions
+add constraint fk_customers_id
+foreign key(customer_id) references customers(customers_id)
+on delete set null;
+
+alter table transactions
+add constraint fk_customers_id
+foreign key(customer_id) references customers(customers_id)
+on delete cascade ;
+
+delete from customers
+where customers_id = 5;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
