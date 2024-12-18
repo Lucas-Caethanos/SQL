@@ -560,6 +560,41 @@ drop index last_name_first_idx;
 
 show indexes from customers;
 
+# ------------------------------------------------------ #
+# SUBQUERY
+
+select *
+from employees;
+
+select
+    first_name,
+    last_name,
+    hourly_pay,
+    (select
+            avg(hourly_pay)
+        from employees) as avg_pay
+from employees;
+
+select
+    first_name,
+    last_name,
+    hourly_pay
+from employees
+where hourly_pay > (select avg(hourly_pay) from employees);
+
+
+
+select
+    first_name,
+    last_name
+from customers
+where customers_id in
+    (select distinct
+        customer_id
+    from transactions
+    where customer_id is not null);
+
+
 
 
 
