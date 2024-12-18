@@ -774,25 +774,45 @@ on delete cascade ;
 delete from customers
 where customers_id = 5;
 
+# ------------------------------------------------------ #
+# STORED PROCEDURES
 
+delimiter $$
+create procedure get_employees()
+begin
+    select * from employees;
+end $$
+delimiter ;
 
+call get_employees();
 
+delimiter $$
+create procedure find_customers(in id int)
+begin
+    select *
+    from customers
+    where customers_id = id;
+end $$
+delimiter ;
 
+call find_customers(11);
 
+select *
+from employees;
 
+delimiter $$
+create procedure find_employees(in f_name varchar(50), in l_name varchar(50))
+begin
+    select *
+    from employees
+    where first_name = f_name and last_name = l_name;
+end $$
+delimiter ;
 
+call find_employees('Sandy', 'Cheeks');
 
-
-
-
-
-
-
-
-
-
-
-
+select *
+from employees;
 
 
 
