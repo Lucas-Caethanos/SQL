@@ -814,17 +814,109 @@ call find_employees('Sandy', 'Cheeks');
 select *
 from employees;
 
+# ------------------------------------------------------ #
+# TRIGGERS
+
+select *
+from employees;
+
+alter table employees
+add column salary decimal(10, 2) after hourly_pay;
+
+update employees
+set salary = hourly_pay * 2080;
+
+create trigger before_hourly_pay_update
+before update on employees
+for each row
+set NEW.salary = (NEW.hourly_pay * 2080);
+
+show triggers;
+
+select *
+from employees;
+
+update employees
+set hourly_pay = hourly_pay + 1;
+
+delete
+from employees
+where employee_id = 8;
+
+create trigger before_hourly_pay_insert
+before insert on employees
+for each row
+set NEW.salary = (new.hourly_pay * 2080);
 
 
+insert into employees (employee_id, first_name, last_name, hourly_pay, salary, job, hire_date, supervisor_id)
+values (8,'Pearl', 'Krabs', 19.20, null, 'janitor', '2020-12-11', 5);
+
+select *
+from employees;
+
+create table expenses(
+    expense_id int primary key,
+    expense_name varchar(50),
+    expense_total decimal(10, 2)
+);
+
+insert into expenses
+values (1, 'salaries', 0),
+       (2, 'supplies', 0),
+       (3, 'taxes', 0);
+
+select *
+from expenses;
+
+update expenses
+set expense_total = (select sum(salary) from employees)
+where expense_name = 'salaries';
+
+create trigger after_salary_delete
+after delete on employees
+for each row
+update expenses
+set expense_total = expense_total - OLD.salary
+where expense_name = 'salaries';
+
+# 1759160.00
+
+delete from employees
+where employee_id = 8;
+
+# expense_total = 1719224.00
+
+create trigger after_salary_insert
+after insert on employees
+for each row
+update expenses
+set expense_total = expense_total + NEW.salary
+where expense_name = 'salaries';
+
+insert into employees (employee_id, first_name, last_name, hourly_pay, salary, job, hire_date, supervisor_id)
+values (8,'Pearl', 'Krabs', 19.20, null, 'janitor', '2020-12-11', 5);
+
+# expense_total = 1759160.00
+
+create trigger after_salary_update
+after update on employees
+for each row
+update expenses
+set expense_total = expense_total + (NEW.salary - OLD.salary)
+where expense_name = 'salaries';
 
 
+update employees
+set hourly_pay = 100
+where employee_id = 1;
 
+select *
+from employees;
 
+select *
+from expenses;
 
-
-
-
-
-
+# expense_total = 1926600.00
 
 
